@@ -9,12 +9,11 @@ import { IMAGE_FOLDER, SAVED_IMAGE_NAME } from '../common/configs.js';
 
 const logger = LogUtil.getLogger();
 
-export const bindTwoImagesIntoOne = async (firstImageText, secondImageText, imageWidth, imageHeight, imageColor, imageSize) => {
-    
+export const bindTwoImagesIntoOne = async (firstImageText, secondImageText, imageWidth, imageHeight, textColor, imageSize) => {
     try {
         const firstImageURL = getImageURL(firstImageText)
         const secondImageURL = getImageURL(secondImageText)
-        const imageRequestParam = getImageRequstParam(imageWidth, imageHeight, imageColor, imageSize)
+        const imageRequestParam = getImageRequstParam(imageWidth, imageHeight, textColor, imageSize)
 
         const firstImageResponse = await axios.get(firstImageURL, {responseType: ARRAY_BUFFER, ...imageRequestParam})
         const firstImageBody = Buffer.from(firstImageResponse.data, BINARY);

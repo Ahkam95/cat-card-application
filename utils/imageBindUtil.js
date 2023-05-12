@@ -1,16 +1,16 @@
-import { DOMAIN, PATH } from "../common/configs.js";
+import { DOMAIN, PATH, DEFAULT_PARAM_VALUES } from "../common/configs.js";
 
 export const getImageURL = (imageText) => {
-    return DOMAIN.concat(PATH).concat(imageText)
+    return DOMAIN.concat(PATH).concat(imageText ? imageText : DEFAULT_PARAM_VALUES.text)
 }
 
-export const getImageRequstParam = (imageWidth=400, imageHeight=500, imageColor='Pink', imageSize=100) => {
+export const getImageRequstParam = (imageWidth, imageHeight, textColor, imageSize) => {
     return {
         params: {
-            width: imageWidth,
-            height: imageHeight,
-            color: imageColor,
-            s: imageSize
+            width: parseInt(imageWidth ? imageWidth : DEFAULT_PARAM_VALUES.width),
+            height: parseInt(imageHeight ? imageHeight : DEFAULT_PARAM_VALUES.height),
+            color: textColor ? textColor : DEFAULT_PARAM_VALUES.color,
+            s: parseInt(imageSize ? imageSize : DEFAULT_PARAM_VALUES.size)
         }
     }
 }

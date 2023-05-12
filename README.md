@@ -19,7 +19,11 @@ export IMAGE_SIZE="100"
 
 2. Start the execution
 ```bash
+npm install
 npm start
 ```
 
-## Run Unittest
+## To run Unittest
+```bash
+npm test
+```
