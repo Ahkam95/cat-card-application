@@ -1,5 +1,5 @@
 # cat-card-application
-Binding 2 cat images into one image with custom texts on them
+Binding 2 cat images into one image with custom texts on them and store them inside catImages folder
 
 ## Prerequisites
 1. Node 18
