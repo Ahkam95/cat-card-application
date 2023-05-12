@@ -8,7 +8,7 @@
     "start": "node ./index.js",
     "test": "jest"
   },
-  "author": "",
+  "author": "Ahkam Naseek",
   "license": "ISC",
   "dependencies": {
     "axios": "1.4.0",

@@ -6,10 +6,13 @@ import LogUtil from '../utils/logUtil.js'
 
 jest.mock('axios');
 jest.mock('jimp');
+jest.mock('../utils/logUtil.js', () => {
+  const errorMock = jest.fn();
+  const getLogger = jest.fn().mockReturnValue({ error: errorMock, info: jest.fn() });
+  return { getLogger };
+});
 
-const logger = LogUtil.getLogger();
-
-describe('bindTwoImagesIntoOne', () => {
+describe('Verifying whether bindTwoImagesIntoOne Service works as expecter or not', () => {
   const firstImageText = 'First image text';
   const secondImageText = 'Second image text';
   const imageWidth = 800;
@@ -18,12 +21,10 @@ describe('bindTwoImagesIntoOne', () => {
   const imageSize = 'large';
 
   beforeEach(() => {
-    // Clear the mock implementation and reset the mock history before each test
     jest.clearAllMocks();
   });
 
   test('should fetch and combine two images', async () => {
-    // Set up the mock responses
     const firstImageData = new Uint8Array([0xFF, 0xD8, 0xFF]).buffer; // Example JPEG data
     const secondImageData = new Uint8Array([0xFF, 0xD8, 0xFF]).buffer; // Example JPEG data
     axios.get.mockResolvedValueOnce({ data: firstImageData });
@@ -33,10 +34,8 @@ describe('bindTwoImagesIntoOne', () => {
     const writeAsyncMock = jest.fn();
     Jimp.prototype.writeAsync = writeAsyncMock;
 
-    // Call the function
     await bindTwoImagesIntoOne(firstImageText, secondImageText, imageWidth, imageHeight, textColor, imageSize);
 
-    // Check the mock invocations and assertions
     expect(axios.get).toHaveBeenCalledTimes(2);
     expect(Jimp.read).toHaveBeenCalledTimes(2);
     expect(writeAsyncMock).toHaveBeenCalledTimes(1);
@@ -44,23 +43,18 @@ describe('bindTwoImagesIntoOne', () => {
   });
 
   test('should log error when fetching images fails', async () => {
-    // Set up the mock error
     const mockError = new Error('Failed to fetch image');
     axios.get.mockRejectedValueOnce(mockError);
-
-    const errorMock = jest.spyOn(logger, 'error');
-
-    // Call the function
     await bindTwoImagesIntoOne(firstImageText, secondImageText, imageWidth, imageHeight, textColor, imageSize);
 
-    // Check the mock invocations and assertions
     expect(axios.get).toHaveBeenCalledTimes(1);
     expect(Jimp.read).not.toHaveBeenCalled();
     expect(Jimp.prototype.writeAsync).not.toHaveBeenCalled();
-    // expect(errorMock).toHaveBeenCalledTimes(2);
-    // expect(errorMock).toHaveBeenCalledWith('Failed to bind the images!');
-    // expect(errorMock).toHaveBeenCalledWith(mockError);
 
-    errorMock.mockRestore();
+    const logger = LogUtil.getLogger();
+    expect(logger.error).toHaveBeenCalledTimes(2);
+    expect(logger.error).toHaveBeenCalledWith('Failed to bind the images!');
+    expect(logger.error).toHaveBeenCalledWith(mockError);
+
   });
 });
