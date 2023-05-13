@@ -1,5 +1,5 @@
-import { getImageURL, getImageRequstParam } from '../utils/imageBindUtil.js';
-import { DEFAULT_PARAM_VALUES } from "../common/configs.js";
+import { getImageURL, getImageRequstParam } from '../src/utils/imageBindUtil.js';
+import { DEFAULT_PARAM_VALUES } from "../src/common/configs.js";
 
 test('Verifying the getImageURL method', () => { 
     expect(getImageURL()).toBe('https://cataas.com/cat/says/Default Text');

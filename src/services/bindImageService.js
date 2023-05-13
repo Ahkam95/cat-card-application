@@ -30,7 +30,6 @@ export const bindTwoImagesIntoOne = async (firstImageText, secondImageText, imag
         await combinedImage.writeAsync(fileOut);
         logger.info('Successfully generated the binded image')
     } catch (e) {
-        console.log('hi')
         logger.error('Failed to bind the images!')
         logger.error(e)
     }

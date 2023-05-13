@@ -1,12 +1,12 @@
 import axios from 'axios';
 import Jimp from 'jimp';
-import { SAVED_IMAGE_NAME } from '../common/configs.js';
-import {bindTwoImagesIntoOne} from '../services/bindImageService.js'
-import LogUtil from '../utils/logUtil.js'
+import { SAVED_IMAGE_NAME } from '../src/common/configs.js';
+import {bindTwoImagesIntoOne} from '../src/services/bindImageService.js'
+import LogUtil from '../src/utils/logUtil.js'
 
 jest.mock('axios');
 jest.mock('jimp');
-jest.mock('../utils/logUtil.js', () => {
+jest.mock('../src/utils/logUtil.js', () => {
   const errorMock = jest.fn();
   const getLogger = jest.fn().mockReturnValue({ error: errorMock, info: jest.fn() });
   return { getLogger };

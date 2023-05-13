@@ -1,4 +1,4 @@
-import LogUtil from '../utils/logUtil.js'
+import LogUtil from '../src/utils/logUtil.js'
 
 describe('Verifying getLogger results', () => {
     test('should return a logger object with the debug log level', () => {
